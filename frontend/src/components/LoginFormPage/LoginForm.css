@@ -1,0 +1,85 @@
+h1 {
+  font-weight: 700;
+  font-size: medium;
+}
+
+.login-top-container {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #d4d5d7;
+  padding: 24px 0px 8px;
+  margin: 0 0 32px;
+  width: 100%;
+}
+
+.login-logo {
+  width: 200px;
+  height: 66.66px;
+}
+
+.login-form-container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 450px;
+}
+
+.login-social-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.login-social-container :not(:first-child) {
+    margin-top: 10px;
+}
+
+.login-social {
+  padding: 16px 0px;
+  border-radius: 40px;
+  border: none;
+  width: 100%;
+  letter-spacing: 3px;
+}
+
+.login-facebook {
+  background-color: #415a93;
+  color: white;
+}
+.login-apple {
+  background-color: black;
+  color: white;
+}
+.login-google {
+  border: 2px solid #626467;
+  background-color: white;
+  color: #626467;
+}
+
+.social-hr-or {
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+.social-hr-or::after {
+    content: "OR";
+    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 1.5em;
+    padding: 0 0.25em;
+    background: white;
+}
