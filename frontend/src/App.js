@@ -8,7 +8,7 @@ import Navigation from "./components/Navigation";
 import SplashPage from "./components/SplashPage"
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard";
-
+import AlbumDetail from "./components/AlbumDetail"
 
 function App() {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ function App() {
             <Navigation isLoaded={isLoaded} />
             <SplashPage />
           </Route>
-          <Route path="/login" >
+          <Route path="/login">
             <LoginFormPage />
           </Route>
           <Route path="/signup">
@@ -34,6 +34,10 @@ function App() {
           <ProtectedRoute path="/dashboard">
             <Navigation isLoaded={isLoaded} />
             <Dashboard />
+          </ProtectedRoute>
+          <ProtectedRoute path="/album/:id">
+            <Navigation isLoaded={isLoaded} />
+            <AlbumDetail />
           </ProtectedRoute>
         </Switch>
       )}

@@ -14,11 +14,11 @@ router.get("/", (req, res) => {
 router.get(
   "/albums",
   asyncHandler(async (req, res) => {
-    const { albumId } = req.query;
-    if (albumId) {
+    const { albumIds } = req.query;
+    if (albumIds) {
       let config = {
         method: "get",
-        url: `https://api.spotify.com/v1/albums?ids=${albumId}`,
+        url: `https://api.spotify.com/v1/albums?ids=${albumIds}`,
         headers: {
           Authorization: `Bearer ${process.env.SPOTIFY_ACCESS_TOKEN}`,
         },
@@ -31,18 +31,30 @@ router.get(
           totalDuration = 0;
           albums[album.id] = {
             openUrl: album.external_urls["spotify"],
-            artists: album.artists.map((artist) => artist.name),
-            genres: album.genres.map((genre) => genre),
             image: album.images[0].url,
             label: album.label,
             name: album.name,
+            release_date: album.release_date.split('-')[0],
+            genres: album.genres.map((genre) => genre),
+            artists: album.artists.map((artist) => {
+              return {
+                name: artist.name,
+                id: artist.id,
+              };
+            }),
+            copyrights: album.copyrights.map((copy) => copy.text),
             songs: {
               total: album.total_tracks,
               tracks: album.tracks.items.map((track) => {
                 totalDuration += track.duration_ms;
                 return {
                   name: track.name,
-                  artists: track.artists.map((artist) => artist.name),
+                  artists: track.artists.map((artist) => {
+                    return {
+                      name: artist.name,
+                      id: artist.id,
+                    };
+                  }),
                   duration: track.duration_ms,
                   track_number: track.track_number,
                   explicit: track.explicit,
