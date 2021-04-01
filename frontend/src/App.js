@@ -9,6 +9,7 @@ import SplashPage from "./components/SplashPage"
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard";
 import AlbumDetail from "./components/AlbumDetail"
+import SearchPage from "./components/SearchPage"
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,10 @@ function App() {
           <ProtectedRoute path="/dashboard">
             <Navigation isLoaded={isLoaded} />
             <Dashboard />
+          </ProtectedRoute>
+          <ProtectedRoute path="/search">
+            <Navigation isLoaded={isLoaded} />
+            <SearchPage />
           </ProtectedRoute>
           <ProtectedRoute path="/album/:id">
             <Navigation isLoaded={isLoaded} />

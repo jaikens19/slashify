@@ -52,7 +52,8 @@ const setSpotifyToken = async (req, res, next) => {
     const tokenObj = response.data;
     if (response.status === 200) {
       process.env.SPOTIFY_ACCESS_TOKEN = tokenObj.access_token;
-      process.env.SPOTIFY_ACCESS_EXPIRES = Date.now() + tokenObj.expires_in * 1000;
+      process.env.SPOTIFY_ACCESS_EXPIRES =
+        Date.now() + tokenObj.expires_in * 1000;
     }
   }
 
