@@ -1,14 +1,33 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import "./SearchPage.css";
+import { searchResults } from "../../store/search";
+
 
 const SearchPage = () => {
+  const dispatch = useDispatch();
   const types = ["album", "artist", "playlist", "track"];
   const [searchInput, setSearchInput] = useState("");
   const [searchType, setSearchType] = useState("album");
 
+  const checkKey = (e) => {
+    const codes = ["Enter", "NumpadEnter"];
+    if (codes.includes(e.code)) {
+      submitSearch();
+    }
+  };
+
+  const submitSearch = () => {
+    if (searchInput) {
+        console.log({ q: searchInput, type: searchType})
+      dispatch(searchResults({ q: searchInput, type: searchType}));
+    }
+  };
+
+  let searchInputField
   useEffect(() => {
-    console.log({ input: searchInput, type: searchType });
-  }, [searchInput, searchType]);
+      searchInputField.focus()
+  })
 
   return (
     <div className="search-page-container">
@@ -24,11 +43,15 @@ const SearchPage = () => {
           ))}
         </select>
         <input
+          onKeyPress={checkKey}
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           maxLength={50}
           placeholder="Search here"
           type="text"
+          ref={text => {
+              searchInputField = text
+          }}
         ></input>
       </div>
       <h1>SEARCH PAGE</h1>
