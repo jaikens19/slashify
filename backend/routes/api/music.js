@@ -21,117 +21,119 @@ router.get(
   "/search",
   asyncHandler(async (req, res) => {
     const types = ["album", "artist", "playlist", "track"];
-    const { q, type } = req.query;
+    const { q, type, limit, offset } = req.query;
     if (q && types.includes(type)) {
       let config = {
         method: "get",
-        url: `https://api.spotify.com/v1/search?q=${q}&type=${type}&limit=50`,
+        url: `https://api.spotify.com/v1/search?q=${q}&type=${type}&limit=${limit}&offset=${offset}`,
         headers,
       };
 
       const response = await axios(config);
       if (response.status === 200) {
-        switch (type) {
-          case "track":
-            const { tracks } = response.data;
-            res.json({
-              total: tracks.total,
-              tracks: Object.assign(
-                ...tracks.items.map((track) => {
-                  return {
-                    [track.id]: {
-                      openUrl: track.external_urls["spotify"],
-                      image: track.album.images[0]
-                        ? track.album.images[0].url
-                        : "",
-                      name: track.name,
-                      duration: track.duration_ms,
-                      explicit: track.explicit,
-                      popularity: track.popularity,
-                      artists: track.album.artists.map((artist) => {
-                        return {
-                          id: artist.id,
-                          name: artist.name,
-                        };
-                      }),
-                      album: {
-                        id: track.album.id,
-                        name: track.album.name,
+        if (response.data[`${type}s`].items.length) {
+          switch (type) {
+            case "track":
+              const { tracks } = response.data;
+              res.json({
+                total: tracks.total,
+                track: Object.assign(
+                  ...tracks.items.map((track) => {
+                    return {
+                      [track.id]: {
+                        openUrl: track.external_urls["spotify"],
+                        image: track.album.images[0]
+                          ? track.album.images[0].url
+                          : "",
+                        name: track.name,
+                        duration: track.duration_ms,
+                        explicit: track.explicit,
+                        popularity: track.popularity,
+                        artists: track.album.artists.map((artist) => {
+                          return {
+                            id: artist.id,
+                            name: artist.name,
+                          };
+                        }),
+                        album: {
+                          id: track.album.id,
+                          name: track.album.name,
+                        },
                       },
-                    },
-                  };
-                })
-              ),
-            });
-            break;
-          case "playlist":
-            const { playlists } = response.data;
-            res.json({
-              total: playlists.total,
-              playlists: Object.assign(
-                ...playlists.items.map((playlist) => {
-                  return {
-                    [playlist.id]: {
-                      openUrl: playlist.external_urls["spotify"],
-                      image: playlist.images[0] ? playlist.images[0].url : "",
-                      name: playlist.name,
-                      description: playlist.description,
-                      songs: {
-                        total: playlist.tracks.total,
+                    };
+                  })
+                ),
+              });
+              break;
+            case "playlist":
+              const { playlists } = response.data;
+              res.json({
+                total: playlists.total,
+                playlist: Object.assign(
+                  ...playlists.items.map((playlist) => {
+                    return {
+                      [playlist.id]: {
+                        openUrl: playlist.external_urls["spotify"],
+                        image: playlist.images[0] ? playlist.images[0].url : "",
+                        name: playlist.name,
+                        description: playlist.description,
+                        songs: {
+                          total: playlist.tracks.total,
+                        },
                       },
-                    },
-                  };
-                })
-              ),
-            });
-            break;
-          case "album":
-            const { albums } = response.data;
-            res.json({
-              total: albums.total,
-              items: albums.items,
-              albums: Object.assign(
-                ...albums.items.map((album) => {
-                  return {
-                    [album.id]: {
-                      openUrl: album.external_urls["spotify"],
-                      name: album.name,
-                      artists: album.artists.map((artist) => artist.name),
-                      image: album.images[0] ? album.images[0].url : "",
-                      songs: {
-                        total: album.total_tracks,
+                    };
+                  })
+                ),
+              });
+              break;
+            case "album":
+              const { albums } = response.data;
+              res.json({
+                total: albums.total,
+                album: Object.assign(
+                  ...albums.items.map((album) => {
+                    return {
+                      [album.id]: {
+                        openUrl: album.external_urls["spotify"],
+                        name: album.name,
+                        artists: album.artists.map((artist) => artist.name),
+                        image: album.images[0] ? album.images[0].url : "",
+                        songs: {
+                          total: album.total_tracks,
+                        },
                       },
-                    },
-                  };
-                })
-              ),
-            });
-            break;
-          case "artist":
-            const { artists } = response.data;
+                    };
+                  })
+                ),
+              });
+              break;
+            case "artist":
+              const { artists } = response.data;
 
-            res.json({
-              total: artists.total,
-              items: artists.items,
-              artists: Object.assign(
-                ...artists.items.map((artist) => {
-                  return {
-                    [artist.id]: {
-                      openUrl: artist.external_urls["spotify"],
-                      image: artist.images[0] ? artist.images[0].url : "",
-                      name: artist.name,
-                      genres: artist.genres,
-                      followers: artist.followers.total,
-                      popularity: artist.popularity,
-                    },
-                  };
-                })
-              ),
-            });
-            break;
+              res.json({
+                total: artists.total,
+                artist: Object.assign(
+                  ...artists.items.map((artist) => {
+                    return {
+                      [artist.id]: {
+                        openUrl: artist.external_urls["spotify"],
+                        image: artist.images[0] ? artist.images[0].url : "",
+                        name: artist.name,
+                        genres: artist.genres,
+                        followers: artist.followers.total,
+                        popularity: artist.popularity,
+                      },
+                    };
+                  })
+                ),
+              });
+              break;
 
-          default:
-            break;
+            default:
+              break;
+          }
+        } else {
+          res.json("NO RESULTS", 204);
         }
       }
     } else {
