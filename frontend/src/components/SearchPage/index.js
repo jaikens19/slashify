@@ -99,7 +99,7 @@ const SearchPage = () => {
           }}
         ></input>
       </div>
-      <SearchList results={searchResultsObj} />
+      <SearchList results={searchResultsObj} type={searchType} />
     </div>
   );
 };

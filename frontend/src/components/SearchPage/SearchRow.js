@@ -1,13 +1,34 @@
-import React from 'react'
+import React, { useState } from "react";
+import "./SearchPage.css";
 
+const SearchRow = ({ result, type }) => {
+  const [id, data] = result;
 
-const SearchRow = ({result}) => {
-    const [id, data] = result
-    return(
-        <>
-        <p>{data.name}</p>
-        </>
-    )
-}
+  const [openUrl] = useState(data.openUrl);
 
-export default SearchRow
+  let row;
+  switch (type) {
+    case "album":
+      row = (
+        <div className="search-results-container">
+          <img src={data.image} />
+          <p>{data.name}</p>
+        </div>
+      );
+      break;
+    case "artist":
+      break;
+    case "playlist":
+      break;
+    case "track":
+      break;
+    default:
+      break;
+  }
+
+  return row
+  
+  
+};
+
+export default SearchRow;

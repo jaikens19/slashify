@@ -1,12 +1,12 @@
 import React from "react";
 import SearchRow from './SearchRow'
 
-const SearchList = ({ results }) => {
+const SearchList = ({ results, type }) => {
 
   let list
   if (!(Object.entries(results) == 0)) {
     list = Object.entries(results.results).map(result => {
-        return <SearchRow key={result[0]} result={result} />   
+        return <SearchRow key={result[0]} result={result} type={type}/>   
     });
   }
   return (
