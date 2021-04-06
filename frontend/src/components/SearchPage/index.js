@@ -75,7 +75,7 @@ const SearchPage = () => {
   });
 
   return (
-    <div className="search-page-container">
+    <div className="search-page-container page">
       <div className="search-bar">
         <select
           value={searchType}

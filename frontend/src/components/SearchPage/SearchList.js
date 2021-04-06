@@ -1,13 +1,58 @@
 import React from "react";
-import SearchRow from './SearchRow'
+import Card from '../Card'
+import TrackRow from '../TrackRow'
+
 
 const SearchList = ({ results, type }) => {
-
   let list
   if (!(Object.entries(results) == 0)) {
-    list = Object.entries(results.results).map(result => {
-        return <SearchRow key={result[0]} result={result} type={type}/>   
-    });
+    list = (
+      <div className='search'>
+        {Object.entries(results.results).map((result) => {
+           switch (type) {
+             case "album":
+               return (
+                 <Card
+                   key={result[0]}
+                   cardInfo={{
+                     image: result[1].image,
+                     title: result[1].name,
+                     text: result[1].artists.join(", "),
+                   }}
+                 />
+               );
+             case "artist":
+               return (
+                 <Card
+                   key={result[0]}
+                   cardInfo={{
+                     image: result[1].image,
+                     title: result[1].name,
+                     text: result[1].genres.join(", "),
+                   }}
+                 />
+               );
+             case "playlist":
+               return (
+                 <Card
+                   key={result[0]}
+                   cardInfo={{
+                     image: result[1].image,
+                     title: result[1].name,
+                     text: result[1].description,
+                   }}
+                 />
+               );
+             case "track":
+               return <TrackRow key={result[0]} rowInfo={result[1]} />
+             default:
+               break;
+           }
+
+          // return <SearchRow key={result[0]} result={result} type={type} />; 
+        })}
+      </div>
+    );
   }
   return (
     <>

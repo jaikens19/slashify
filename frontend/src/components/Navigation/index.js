@@ -1,17 +1,15 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import ProfileButton from './ProfileButton';
-import './Navigation.css';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import ProfileButton from "./ProfileButton";
+import "./Navigation.css";
 
 const Navigation = ({ isLoaded }) => {
-  const sessionUser = useSelector(state => state.session.user);
-  
+  const sessionUser = useSelector((state) => state.session.user);
+
   let sessionLinks;
   if (sessionUser) {
-    sessionLinks = (
-      <ProfileButton user={sessionUser} />
-    );
+    sessionLinks = <ProfileButton user={sessionUser} />;
   } else {
     sessionLinks = (
       <>
@@ -22,15 +20,17 @@ const Navigation = ({ isLoaded }) => {
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">
-          Home
-        </NavLink>
-        {isLoaded &&  sessionLinks}
-      </li>
-    </ul>
+    <div className="navbar-container">
+      <ul>
+        <li>
+          <NavLink exact to="/">
+            Home
+          </NavLink>
+          {isLoaded && sessionLinks}
+        </li>
+      </ul>
+    </div>
   );
-}
+};
 
 export default Navigation;
