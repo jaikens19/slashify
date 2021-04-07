@@ -1,15 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import "./TrackRow.css";
-import {updateSongLink} from '../../store'
+import { updateSongLink } from "../../store/songbar";
 
-
-const TrackRow = ({ rowInfo }) => {
+const TrackRow = ({ id, rowInfo }) => {
   const { openUrl, image, name, artists, explicit, duration } = rowInfo;
+  const history = useHistory();
   const [isLiked, setIsLiked] = useState(false);
-  const dispatch = useDispatch()
-  const widgetState = useSelector(state => state.songbar)
+  const dispatch = useDispatch();
 
   const convertTime = (ms) => {
     const minutes = ms / 1000 / 60;
@@ -20,17 +20,21 @@ const TrackRow = ({ rowInfo }) => {
     )}`;
   };
   const toggleLike = () => {
-      setIsLiked(!isLiked)
-  }
+    setIsLiked(!isLiked);
+  };
+
+  const navigate = (link) => {
+    history.push(link);
+  };
 
   const updatePlayer = () => {
-    dispatch(updateSongLink(openUrl))
-  }
+    dispatch(updateSongLink(`https://open.spotify.com/embed/track/${id}`));
+  };
 
   return (
     <div className="track-results-row">
       <div className="track-results-info">
-        <div className="track-results-image-container">
+        <div className="track-results-image-container" onClick={updatePlayer}>
           <div className="track-results-image-overlay">
             <i className="fas fa-play"></i>
           </div>
@@ -40,7 +44,18 @@ const TrackRow = ({ rowInfo }) => {
           <b>{name}</b>
           <div className="track-results-row-artist">
             {explicit && <span className="track-results-row-explicit">E</span>}
-            <p>{artists.map((artist) => artist.name).join(", ")}</p>
+            <div className="track-results-row-artist-list">
+              {artists.map((artist) => {
+                return (
+                  <p
+                    className="track-results-row-artist-link"
+                    onClick={() => navigate(`/artist/${artist.id}`)}
+                  >
+                    {artist.name}
+                  </p>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

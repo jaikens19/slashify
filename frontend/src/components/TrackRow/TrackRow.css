@@ -13,17 +13,18 @@
 }
 
 .heart-button,
-.fa-ellipsis-h, 
+.fa-ellipsis-h,
 .track-results-image-overlay {
   opacity: 0;
 }
 
-.track-results-row:hover :is(.heart-button, .fa-ellipsis-h, .track-results-image-overlay) {
+.track-results-row:hover
+  :is(.heart-button, .fa-ellipsis-h, .track-results-image-overlay) {
   opacity: 1;
 }
 
 .track-results-row:hover .track-results-image-overlay {
-     background: rgba(0, 0, 0, 0.65)
+  background: rgba(0, 0, 0, 0.65);
 }
 
 .track-results-image-container {
@@ -33,16 +34,30 @@
 }
 
 .track-results-image-container:hover {
- cursor: pointer;
+  cursor: pointer;
+}
+
+.track-results-row-artist-list {
+  display: flex;
+}
+
+.track-results-row-artist-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.track-results-row-artist-list > :not(:last-child)::after {
+  margin-right: 4px;
+  content: ",";
 }
 
 .track-results-image-overlay {
-    display: flex;
-    position: absolute;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 .track-results-info {
@@ -90,5 +105,3 @@
   margin-left: 16px;
 }
 
-/* .track-results-duration {
-} */

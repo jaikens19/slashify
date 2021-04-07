@@ -5,6 +5,7 @@ import { searchResults } from "../../store/search";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import SearchList from "./SearchList";
 
+
 const SearchPage = () => {
   const dispatch = useDispatch();
   const types = ["album", "artist", "playlist", "track"];
