@@ -10,7 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard";
 import AlbumDetail from "./components/AlbumDetail"
 import SearchPage from "./components/SearchPage"
-
+import SongWidget from "./components/SongWidget";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -35,14 +35,17 @@ function App() {
           <ProtectedRoute path="/dashboard">
             <Navigation isLoaded={isLoaded} />
             <Dashboard />
+            <SongWidget />
           </ProtectedRoute>
           <ProtectedRoute path="/search">
             <Navigation isLoaded={isLoaded} />
             <SearchPage />
+            <SongWidget />
           </ProtectedRoute>
           <ProtectedRoute path="/album/:id">
             <Navigation isLoaded={isLoaded} />
             <AlbumDetail />
+            <SongWidget />
           </ProtectedRoute>
         </Switch>
       )}

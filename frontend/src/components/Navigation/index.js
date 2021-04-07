@@ -1,17 +1,20 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import ProfileButton from './ProfileButton';
-import './Navigation.css';
+import React from "react";
+import { NavLink, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import ProfileButton from "./ProfileButton";
+import "./Navigation.css";
 
 const Navigation = ({ isLoaded }) => {
-  const sessionUser = useSelector(state => state.session.user);
-  
+  const sessionUser = useSelector((state) => state.session.user);
+  const history = useHistory();
+
+  function navigate(direction) {
+    history.go(direction);
+  }
+
   let sessionLinks;
   if (sessionUser) {
-    sessionLinks = (
-      <ProfileButton user={sessionUser} />
-    );
+    sessionLinks = <ProfileButton user={sessionUser} />;
   } else {
     sessionLinks = (
       <>
@@ -22,15 +25,18 @@ const Navigation = ({ isLoaded }) => {
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">
-          Home
-        </NavLink>
-        {isLoaded &&  sessionLinks}
-      </li>
-    </ul>
+    <div className="navbar-container">
+      <div className="navbar-btns-container">
+        <div className="navbar-history-btn" onClick={() => navigate(-1)}>
+          <i className="fal fa-chevron-left"></i>
+        </div>
+        <div className="navbar-history-btn" onClick={() => navigate(1)}>
+          <i className="fal fa-chevron-right"></i>
+        </div>
+      </div>
+      {isLoaded && sessionLinks}
+    </div>
   );
-}
+};
 
 export default Navigation;
