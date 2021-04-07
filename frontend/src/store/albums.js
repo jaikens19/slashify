@@ -13,7 +13,6 @@ export const getAlbum = (ids) => async (dispatch) => {
   const res = await fetch(`/api/music/albums?albumIds=${ids}`);
 
   if (res.ok) {
-    console.log(res.data);
     dispatch(addAlbums(res.data.albums))
   }
 };

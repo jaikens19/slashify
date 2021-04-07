@@ -23,14 +23,10 @@ export const searchResults = ({ q, type, limit, offset }) => async (dispatch, ge
     const { [type]: results, total } = res.data;
     const state = getState();
     const { [type]: prevSearch } = state.search;
-    console.log(prevSearch);
-    console.log(state);
     if (!(q === prevSearch.q)) {
-      console.log("new search ");
       dispatch(newSearch(type, q, total, results));
      
     } else {
-      console.log("same search");
       dispatch(updateSearch(type, results))
     }
     return true
