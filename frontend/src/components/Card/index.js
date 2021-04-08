@@ -1,8 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import "./Card.css";
 import { useDispatch } from "react-redux"
 import { updateSongLink } from "../../store/songbar";
+import "./Card.css";
 
 const Card = ({ id, type, cardInfo }) => {
   const { image, title, text } = cardInfo;

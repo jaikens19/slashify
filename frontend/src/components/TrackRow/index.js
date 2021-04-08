@@ -6,7 +6,7 @@ import "./TrackRow.css";
 import { updateSongLink } from "../../store/songbar";
 
 const TrackRow = ({ id, rowInfo }) => {
-  const { openUrl, image, name, artists, explicit, duration } = rowInfo;
+  const { image, name, artists, explicit, duration } = rowInfo;
   const history = useHistory();
   const [isLiked, setIsLiked] = useState(false);
   const dispatch = useDispatch();
