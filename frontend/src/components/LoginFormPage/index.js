@@ -27,7 +27,7 @@ function LoginFormPage() {
     <>
       <div className="login-top-container">
         <a href="/login">
-          <img className="login-logo" src="images/logo.svg"></img>
+          <img alt='login-logo' className="login-logo" src="images/logo.svg"></img>
         </a>
       </div>
       <div className="login-form-container">

@@ -64,7 +64,11 @@ const SearchPage = () => {
 
   useEffect(() => {
     submitSearch()
-  }, [searchOffset])
+  }, [searchOffset, searchType])
+
+  useEffect(() => {
+    setSearchOffset(0)
+  },[searchInput, searchType])
 
   useScrollPosition(() => {
     let percent = amountScrolled()
@@ -79,6 +83,7 @@ const SearchPage = () => {
     <div className="search-page-container page">
       <div className="search-bar">
         <select
+          className="search-input-type"
           value={searchType}
           onChange={(e) => setSearchType(e.target.value)}
         >
@@ -89,6 +94,7 @@ const SearchPage = () => {
           ))}
         </select>
         <input
+          className="search-input-text"
           onKeyPress={checkKey}
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
@@ -100,7 +106,9 @@ const SearchPage = () => {
           }}
         ></input>
       </div>
-      <SearchList results={searchResultsObj} type={searchType} />
+      <div className='search-page'>{ searchResultsObj.q === searchInput && 
+        <SearchList results={searchResultsObj} type={searchType} />}
+      </div>
     </div>
   );
 };

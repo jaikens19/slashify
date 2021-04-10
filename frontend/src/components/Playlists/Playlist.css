@@ -1,11 +1,11 @@
-.album-page {
+.playlist-page {
     padding: calc(var(--navbar-height)) 0 calc(var(--widget-height));
 }
-.album {
+.playlist {
     height: 100%;
     font-family: 'Montserrat', sans-serif;
 }
-.album-details {
+.playlist-details {
     display: flex;
     align-items: flex-end;
     position: relative;
@@ -14,62 +14,62 @@
     padding: 16px 24px;
     color: #fff;
 }
-.album-image {
+.playlist-image {
     height: 200px;
     width: 200px;
     bottom: 0;
 }
 
-.album-text {
+.playlist-text {
     margin-left: 16px;
 }
 
-.album-text > p {
+.playlist-text > p {
     font-size: 12px;
     font-weight: bold;
 }
-.album-text h1 {
+.playlist-text h1 {
     font-size: 7vw;
     letter-spacing: -5px;
 }
 
-.album-stats {
+.playlist-stats {
     font-size: 14px;
     display: flex;
     align-items: center;
 }
-.album-stats > :not(:first-child)::before {
+.playlist-stats > :not(:first-child)::before {
     margin: 0 2px;
     align-items: center;
     content: '•';
     font-weight: bold;
 }
-.album-artist {
+.playlist-artist {
     display: flex;
     align-items: center;
 }
-.album-artist-image {
+.playlist-artist-image {
     height: 24px;
     width: 24px;
     border-radius: 50%;
 }
 
-.album-artist-name {
+.playlist-artist-name {
     color: #fff;
     text-decoration: none;
     margin-left: 2px;
     font-weight: bold;
 }
-.album-artist-name:hover {
+.playlist-artist-name:hover {
     text-decoration: underline;
 }
 
-.album-tracks {
+.playlist-tracks {
     padding: 16px;
     background-color: #00000030;
     height: 100%;
 }
-.album-tracks > :not(:first-child) {
+.playlist-tracks > :not(:first-child) {
     margin-top: 16px;
 }
 
@@ -92,13 +92,13 @@
 .play-button:hover {
     transform: scale(1.05);
 }
-.heart-album,
+.heart-playlist,
 .heart-track,
 .dropdown-button {
     font-size: 24px;
     color: #8f8f8f;
 }
-:is(.heart-album, .heart-track, .dropdown-button):hover {
+:is(.heart-playlist, .heart-track, .dropdown-button):hover {
     color: #bfbfbf;
 }
 .play-button i {

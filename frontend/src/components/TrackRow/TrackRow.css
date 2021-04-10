@@ -1,107 +1,109 @@
-.track-results-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 50px;
-  color: #ffffff;
-  padding: 8px;
+.track-result-row {
+	--row-height: 75px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: var(--row-height);
+	border-radius: 4px;
+	padding: 8px;
+}
+.track-result-row:hover {
+	background-color: #4f4f4f;
+}
+.heart-track,
+.track-options,
+.track-result-row-overlay {
+	opacity: 0;
+}
+.track-result-row:hover :is(.heart-track, .track-options, .track-result-row-overlay) {
+	opacity: 1;
 }
 
-.track-results-row:hover {
-  background-color: #2a2a2a;
-  border-radius: 5px;
+.track-result-row:hover .track-result-row-overlay {
+	background: #000000aa;
+}
+.album-tracks .track-result-row:hover .track-result-row-overlay {
+	background: none;
 }
 
-.heart-button,
-.fa-ellipsis-h,
-.track-results-image-overlay {
-  opacity: 0;
+.track-result-row-info {
+	display: flex;
+	align-items: center;
 }
 
-.track-results-row:hover
-  :is(.heart-button, .fa-ellipsis-h, .track-results-image-overlay) {
-  opacity: 1;
+.track-result-image-container {
+	position: relative;
+	height: calc(var(--row-height) * 0.7);
+	width: calc(var(--row-height) * 0.7);
 }
 
-.track-results-row:hover .track-results-image-overlay {
-  background: rgba(0, 0, 0, 0.65);
+.track-result-image-container:hover {
+	cursor: pointer;
 }
 
-.track-results-image-container {
-  position: relative;
-  height: 35px;
-  width: 35px;
+.track-result-row-overlay {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	height: 100%;
+	width: 100%;
 }
-
-.track-results-image-container:hover {
-  cursor: pointer;
+.track-result-row-image {
+	height: 100%;
+	width: 100%;
 }
-
-.track-results-row-artist-list {
-  display: flex;
+.track-result-number {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
 }
-
-.track-results-row-artist-link:hover {
-  text-decoration: underline;
-  cursor: pointer;
+.track-result-row:hover .track-result-number {
+	opacity: 0;
 }
-
-.track-results-row-artist-list > :not(:last-child)::after {
-  margin-right: 4px;
-  content: ",";
+.track-result-row-text {
+	margin-left: 16px;
 }
-
-.track-results-image-overlay {
-  display: flex;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
+.track-result-row-artist {
+	display: flex;
+	margin-top: 4px;
+	color: var(--color-text-sub);
 }
-
-.track-results-info {
-  display: flex;
-  align-items: center;
+.track-result-row-explicit {
+	margin-right: 8px;
+	padding: 4px;
+	height: 16px;
+	width: 16px;
+	border-radius: 2px;
+	background-color: var(--color-text-sub);
+	color: var(--color-background);
+	font-size: 10px;
+	text-align: center;
+	line-height: 10px;
 }
-
-.track-results-image {
-  height: 100%;
-  width: 100%;
+.track-result-row-artist-list {
+	display: flex;
 }
-
-.track-results-row-name {
-  margin-left: 16px;
+.track-result-row-artist-link:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+.track-result-row-artist-list > :not(:last-child)::after {
+	margin-right: 4px;
+	content: ',';
+}
+.track-result-row-buttons {
+	display: flex;
+	align-items: center;
 }
 
 .is-liked {
-  opacity: 1;
-  color: #44eb46;
+	opacity: 1;
 }
 
-.track-results-row-artist {
-  display: flex;
-  color: #b2b2b2;
+.track-result-row-duration {
+	text-align: center;
+	width: 30px;
+	margin: 0 16px;
 }
-
-.track-results-row-explicit {
-  margin-right: 8px;
-  height: 16px;
-  width: 16px;
-  color: black;
-  font-size: 10px;
-  background-color: #a0a0a0;
-  padding: 4px;
-  border-radius: 2px;
-  text-align: center;
-  line-height: 8px;
-}
-
-.track-results-row-btn {
-  display: flex;
-}
-
-.track-results-row-btn :not(:first-child) {
-  margin-left: 16px;
-}
-

@@ -1,76 +1,80 @@
-import React from "react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import "./TrackRow.css";
-import { updateSongLink } from "../../store/songbar";
+import { useDispatch } from "react-redux";
 
-const TrackRow = ({ id, rowInfo }) => {
-  const { image, name, artists, explicit, duration } = rowInfo;
+import { checkText, updatePlayer } from "../../utils";
+
+import "./TrackRow.css";
+
+export default function TrackRow({ id, rowInfo }) {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [isLiked, setIsLiked] = useState(false);
-  const dispatch = useDispatch();
+  const { image, name, artists, explicit, duration, number } = rowInfo;
 
-  const convertTime = (ms) => {
+  function convertTime(ms) {
     const minutes = ms / 1000 / 60;
     const seconds = (minutes % 1).toFixed(4) * 60;
     return `${Math.floor(minutes)}:${String(Math.floor(seconds)).padStart(
       2,
       "0"
     )}`;
-  };
-  const toggleLike = () => {
-    setIsLiked(!isLiked);
-  };
+  }
 
-  const navigate = (link) => {
+  function navigate(link) {
     history.push(link);
-  };
+  }
 
-  const updatePlayer = () => {
-    dispatch(updateSongLink(`https://open.spotify.com/embed/track/${id}`));
-  };
+  function toggleLike() {
+    setIsLiked(!isLiked);
+  }
 
   return (
-    <div className="track-results-row">
-      <div className="track-results-info">
-        <div className="track-results-image-container" onClick={updatePlayer}>
-          <div className="track-results-image-overlay">
+    <div className="track-result-row">
+      <div className="track-result-row-info">
+        <div
+          className="track-result-image-container"
+          onClick={(e) => updatePlayer(dispatch, e, "track", id)}
+        >
+          <div className="track-result-row-overlay">
             <i className="fas fa-play"></i>
           </div>
-          <img className="track-results-image" src={image} />
+          {image && <img className="track-result-row-image" src={image} />}
+          {!image && <p className="track-result-number">{number}</p>}
         </div>
-        <div className="track-results-row-name">
-          <b>{name}</b>
-          <div className="track-results-row-artist">
-            {explicit && <span className="track-results-row-explicit">E</span>}
-            <div className="track-results-row-artist-list">
-              {artists.map((artist) => {
-                return (
-                  <p
-                    className="track-results-row-artist-link"
-                    onClick={() => navigate(`/artist/${artist.id}`)}
-                  >
-                    {artist.name}
-                  </p>
-                );
-              })}
+        <div className="track-result-row-text">
+          <b>{checkText(name, 50)}</b>
+          <div className="track-result-row-artist">
+            {explicit && <span className="track-result-row-explicit">E</span>}
+            <div className="track-result-row-artist-list">
+              {checkText(
+                artists.map((artist) => {
+                  return (
+                    <p
+                      key={artist.id}
+                      className="track-result-row-artist-link"
+                      onClick={() => navigate(`/artist/${artist.id}`)}
+                    >
+                      {artist.name}
+                    </p>
+                  );
+                }),
+                10
+              )}
             </div>
           </div>
         </div>
       </div>
-      <div className="track-results-row-btn">
+
+      <div className="track-result-row-buttons">
         <i
-          className={`${
-            isLiked ? "fas is-liked" : "fal"
-          } fa-heart heart-button`}
+          className={`${isLiked ? "fas is-liked" : "fal"} fa-heart heart-track`}
+          style={{ color: isLiked ? "#1db954" : "" }}
           onClick={toggleLike}
         ></i>
-        <p className="track-results-duration">{convertTime(duration)}</p>
-        <i className="far fa-ellipsis-h"></i>
+        <p className="track-result-row-duration">{convertTime(duration)}</p>
+        <i className="far fa-ellipsis-h track-options"></i>
       </div>
     </div>
   );
-};
-
-export default TrackRow;
+}

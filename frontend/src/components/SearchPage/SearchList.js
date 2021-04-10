@@ -6,7 +6,7 @@ const SearchList = ({ results, type }) => {
   let list;
   if (!(Object.entries(results) == 0)) {
     list = (
-      <div className="search-list">
+      <div className="search-list" style={type === 'track' ? {gridTemplateColumns: '1fr', gap: '0', justifyItems: 'stretch'} : {}}>
         {Object.entries(results.results).map((result) => {
           switch (type) {
             case "album":
@@ -55,8 +55,6 @@ const SearchList = ({ results, type }) => {
             default:
               break;
           }
-
-          // return <SearchRow key={result[0]} result={result} type={type} />;
         })}
       </div>
     );
@@ -64,12 +62,12 @@ const SearchList = ({ results, type }) => {
   return (
     <>
       {!(Object.entries(results) == 0) && (
-        <>
+        <div className='result-container'>
           <h1>
             results for "{results.q}" returned: {results.total} results
           </h1>
           {list}
-        </>
+        </div >
       )}
     </>
   );

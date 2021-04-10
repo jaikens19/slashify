@@ -11,6 +11,10 @@ import Dashboard from "./components/Dashboard";
 import AlbumDetail from "./components/AlbumDetail"
 import SearchPage from "./components/SearchPage"
 import SongWidget from "./components/SongWidget";
+import ArtistDetail from "./components/ArtistDetail"
+import Playlist from  "./components/Playlists"
+
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -45,6 +49,16 @@ function App() {
           <ProtectedRoute path="/album/:id">
             <Navigation isLoaded={isLoaded} />
             <AlbumDetail />
+            <SongWidget />
+          </ProtectedRoute>
+          <ProtectedRoute path="/artist/:id">
+            <Navigation isLoaded={isLoaded} />
+            <ArtistDetail />
+            <SongWidget />
+          </ProtectedRoute>
+          <ProtectedRoute path="/playlist/:id">
+            <Navigation isLoaded={isLoaded} />
+            <Playlist />
             <SongWidget />
           </ProtectedRoute>
         </Switch>
