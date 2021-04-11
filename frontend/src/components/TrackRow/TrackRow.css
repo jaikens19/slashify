@@ -68,7 +68,7 @@
 .track-result-row-artist {
 	display: flex;
 	margin-top: 4px;
-	color: var(--color-text-sub);
+	color: #cfcfcf;
 }
 .track-result-row-explicit {
 	margin-right: 8px;
@@ -76,11 +76,11 @@
 	height: 16px;
 	width: 16px;
 	border-radius: 2px;
-	background-color: var(--color-text-sub);
-	color: var(--color-background);
+	background-color: #cfcfcf;
+	color:#121212;
 	font-size: 10px;
 	text-align: center;
-	line-height: 10px;
+	line-height: 8px;
 }
 .track-result-row-artist-list {
 	display: flex;

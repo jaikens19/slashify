@@ -1,4 +1,9 @@
-.search-page > :not(:first-child) {
+.search-page-container {
+	width: 100%;
+	padding: 58px 16px 96px;
+}
+
+.search-page-container > :not(:first-child) {
 	margin-top: 8px;
 }
 .search-page {

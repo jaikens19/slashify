@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
+import SearchPage from "../SearchPage";
 import "./Navigation.css";
 
 const Navigation = ({ isLoaded }) => {
@@ -15,6 +16,7 @@ const Navigation = ({ isLoaded }) => {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = <ProfileButton user={sessionUser} />;
+  
   } else {
     sessionLinks = (
       <>

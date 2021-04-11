@@ -6,8 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TrackRow from "../TrackRow";
 import { checkText, getColors, defaultAvatar } from "../../utils";
 
-// bad playlist ID: 2KrnunwPRQhX2x4KYLb4Ed 
-
+// bad playlist ID: 2KrnunwPRQhX2x4KYLb4Ed
 
 const Playlist = () => {
   const { id } = useParams();
@@ -20,7 +19,7 @@ const Playlist = () => {
   useEffect(() => {
     if (!playlist) {
       dispatch(getPlaylists(id));
-        // console.log(playlist.owner.id)
+      // console.log(playlist.owner.id)
     } else {
       setIsLoaded(true);
     }
@@ -39,7 +38,7 @@ const Playlist = () => {
   }
 
   return (
-    <div className="page playlist-detail">
+    <div className="playlist-page">
       <div
         className="playlist"
         style={{ background: `linear-gradient(${colorState},#0f0f0f 550px)` }}
@@ -55,17 +54,17 @@ const Playlist = () => {
               <div className="playlist-text">
                 <p>PLAYLIST</p>
                 <h1>{checkText(playlist?.name, 30)}</h1>
-              </div>
-              <div className="playlist-stats">
                 <p>{playlist.description}</p>
-                <a
-                  className="album-artist-name"
-                  href={`/user/${playlist.owner.id}`}
-                >
-                  {playlist.owner.name}
-                </a>
-                <p className="playlist-likes">{playlist.likes} likes</p>
-                <p className="playlist-songs">{playlist.songs.total} songs</p>
+                <div className="playlist-stats">
+                  <a
+                    className="album-artist-name"
+                    href={`/user/${playlist.owner.id}`}
+                  >
+                    {playlist.owner.name}
+                  </a>
+                  <p className="playlist-likes">{playlist.likes} likes</p>
+                  <p className="playlist-songs">{playlist.songs.total} songs</p>
+                </div>
               </div>
             </div>
             <div className="playlist-tracks">

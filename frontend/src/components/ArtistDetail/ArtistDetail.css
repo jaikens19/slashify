@@ -1,0 +1,82 @@
+.artist-details {
+    display: flex;
+    align-items: flex-end;
+    padding: 16px 24px;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+     color: white
+}
+.artist-text > :not(:first-child) {
+    margin-top: 8px;
+}
+.artist-text h1 {
+    font-size: 7vw;
+    letter-spacing: -5px;
+   
+}
+.verified-artist {
+    display: flex;
+    align-items: center;
+}
+.verified-artist i {
+    font-size: 24px;
+}
+.verified-artist p {
+    margin-left: 4px;
+    font-size: 14px;
+}
+.artist-tracks {
+    padding: 16px;
+}
+
+.follow-button {
+    padding: 8px 16px;
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: 12px;
+    border: 1px solid #cfcfcf55;
+    user-select: none;
+    color: white
+}
+.active {
+    border: 1px solid #fff;
+}
+.follow-button:hover {
+    border: 1px solid #fff;
+}
+
+.top-tracks {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+}
+
+.top-tracks > b {
+    font-size: 22px;
+}
+.top-tracks > :not(:first-child) {
+    margin-top: 8px;
+}
+.show-button {
+    color: rgb(145, 145, 145);
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.show-button:hover {
+   color: white;
+   cursor: default;
+   user-select: none;
+}
+
+
+
+.artists-discography-list {
+    display: grid;
+	gap: 16px;
+	width: 100%;
+	justify-items: center;
+	align-items: center;
+}

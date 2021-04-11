@@ -5,12 +5,12 @@ export function checkText(text, maxText) {
   return text.length > maxText ? text.slice(0, maxText) + "..." : text;
 }
 
-export function getColors(image) {
+export function getColors(image, a = 1) {
   return new Promise(async (res, rej) => {
     const colors = await detectColors(image);
     res(
       colors.map((color) => {
-        const [r, g, b, a] = color._rgb;
+        const [r, g, b] = color._rgb;
         return `rgba(${r},${g},${b},${a})`;
       })
     );

@@ -5,6 +5,7 @@
   box-sizing: border-box;
   font-family: Helvetica Neue, helvetica,
     arial, Hiragino Kaku Gothic Pro, Meiryo, MS Gothic, sans-serif;
+    
 }
 
 html,
@@ -15,6 +16,6 @@ body,
 }
 
 .page {
-  padding: 58px 16px 96px;
+
   color: white;
 }
