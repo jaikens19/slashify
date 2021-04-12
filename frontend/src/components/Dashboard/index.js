@@ -11,6 +11,7 @@ export default function Dashboard() {
   const likes = useSelector((state) => state.likes);
   const { featured, newReleases, recommended } = useSelector(
     (state) => state.dashboard
+    
   );
 
   useEffect(() => {
