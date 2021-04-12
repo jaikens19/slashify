@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import "./LoginForm.css";
 
 function LoginFormPage() {
@@ -27,7 +27,11 @@ function LoginFormPage() {
     <>
       <div className="login-top-container">
         <a href="/login">
-          <img alt='login-logo' className="login-logo" src="images/logo.svg"></img>
+          <img
+            alt="login-logo"
+            className="login-logo"
+            src="images/logo.svg"
+          ></img>
         </a>
       </div>
       <div className="login-form-container">
@@ -72,7 +76,9 @@ function LoginFormPage() {
           <label for="remember">Remember me</label>
           <button type="submit">Log In</button>
           <h1>Don't have an account?</h1>
-          <button>SIGN UP FOR SPOTIFY</button>
+          <Link to='/signup'>
+            <button>SIGN UP FOR SPOTIFY</button>
+          </Link>
         </form>
       </div>
     </>

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import SearchPage from "../SearchPage";
@@ -29,13 +29,19 @@ const Navigation = ({ isLoaded }) => {
   return (
     <div className="navbar-container">
       <div className="navbar-btns-container">
+        <div className="navbar-history-btn">
+            <i onClick={() => history.push('/')} class="fas fa-home"></i>
+        </div>
         <div className="navbar-history-btn" onClick={() => history.goBack()}>
           <i className="fal fa-chevron-left"></i>
         </div>
         <div className="navbar-history-btn" onClick={() => history.goForward()}>
           <i className="fal fa-chevron-right"></i>
         </div>
-        <div className="navbar-history-btn" onClick={() => history.push('/search')}>
+        <div
+          className="navbar-history-btn"
+          onClick={() => history.push("/search")}
+        >
           <i className="fal fa-search"></i>
         </div>
       </div>
