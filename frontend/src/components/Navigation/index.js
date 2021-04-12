@@ -29,10 +29,10 @@ const Navigation = ({ isLoaded }) => {
   return (
     <div className="navbar-container">
       <div className="navbar-btns-container">
-        <div className="navbar-history-btn" onClick={() => navigate(-1)}>
+        <div className="navbar-history-btn" onClick={() => history.goBack()}>
           <i className="fal fa-chevron-left"></i>
         </div>
-        <div className="navbar-history-btn" onClick={() => navigate(1)}>
+        <div className="navbar-history-btn" onClick={() => history.goForward()}>
           <i className="fal fa-chevron-right"></i>
         </div>
       </div>

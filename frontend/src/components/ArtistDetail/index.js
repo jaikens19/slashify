@@ -132,7 +132,7 @@ const ArtistDetail = () => {
                     className="artists-discography-list"
                     style={
                       {
-                            gridTemplateColumns: `repeat(${count}, 1fr)`,
+                            gridTemplateColumns: ` 1fr)`,
                             gap: "0",
                             justifyItems: "stretch",
                           }
