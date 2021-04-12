@@ -9,7 +9,10 @@ const Card = ({ id, type, cardInfo }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const navigate = (id) => {
-    history.push(`/${type}/${id}`);
+    if(type !== 'track'){
+
+      history.push(`/${type}/${id}`);
+    }
   };
 
   const updatePlayer = (e) => {
