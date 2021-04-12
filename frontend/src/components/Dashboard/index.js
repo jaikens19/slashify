@@ -4,7 +4,7 @@ import { getLists } from "../../store/dashboard";
 
 import Card from "../Card";
 
-import "./Dashboard.css";
+import "./dashboard.css";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
