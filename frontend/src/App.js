@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import SplashPage from "./components/SplashPage"
+
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard";
 import AlbumDetail from "./components/AlbumDetail"
@@ -13,14 +13,22 @@ import SearchPage from "./components/SearchPage"
 import SongWidget from "./components/SongWidget";
 import ArtistDetail from "./components/ArtistDetail"
 import Playlist from  "./components/Playlists"
-
+import { getLikes } from "./store/likes"
 
 function App() {
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
+  
+  useEffect(() => {
+    if(sessionUser) {
+      dispatch(getLikes(sessionUser.id))
+    }
+  },[dispatch, sessionUser])
+  
 
   return (
     <>
@@ -28,7 +36,8 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Navigation isLoaded={isLoaded} />
-            <SplashPage />
+            <Dashboard />
+            <SongWidget />
           </Route>
           <Route path="/login">
             <LoginFormPage />
@@ -36,11 +45,6 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <ProtectedRoute path="/dashboard">
-            <Navigation isLoaded={isLoaded} />
-            <Dashboard />
-            <SongWidget />
-          </ProtectedRoute>
           <ProtectedRoute path="/search">
             <Navigation isLoaded={isLoaded} />
             <SearchPage />

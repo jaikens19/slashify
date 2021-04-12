@@ -27,20 +27,17 @@ router.get(
   asyncHandler(async (req, res) => {
     const config = {
       method: "get",
-      url: "https://api.spotify.com/v1/browse/featured-playlists&country=US",
+      url: `https://api.spotify.com/v1/browse/featured-playlists?country=US`,
       headers,
     };
-
     const response = await axios(config);
-
     if (response.status === 200) {
       const { message, playlists, total } = response.data;
-
       res.json({
         total,
         message,
         playlists: Object.assign(
-          playlists.items.map((playlist) => {
+          ...playlists.items.map((playlist) => {
             const { id, images, name, external_urls, description } = playlist;
             return {
               [id]: {
@@ -62,15 +59,12 @@ router.get(
   asyncHandler(async (req, res) => {
     const config = {
       method: "get",
-      url: "https://api.spotify.com/v1/browse/new-releases&country=US",
+      url: `https://api.spotify.com/v1/browse/new-releases?country=US`,
       headers,
     };
-
     const response = await axios(config);
-
     if (response.status === 200) {
       const { albums, total } = response.data;
-
       res.json({
         total,
         albums: Object.assign(
@@ -81,7 +75,7 @@ router.get(
                 openUrl: external_urls["spotify"],
                 name,
                 image: images[0] ? images[0].url : defaultImage,
-                artists: artists.map((album) => album.name),
+                artists: artists.map((a) => a.name),
               },
             };
           })
@@ -94,36 +88,38 @@ router.get(
 router.get(
   "/recommendations",
   asyncHandler(async (req, res) => {
-    const config = {
-      method: "get",
-      url: `https://api.spotify.com/v1/browse/recommendations?seed_artists=${
-        seed_artists ? seed_artists : ""
-      }&seed_genres=${seed_genres ? seed_genres : ""}&seed_tracks=${
-        seed_tracks ? seed_tracks : ""
-      }`,
-      headers,
-    };
+    const { seed_artists, seed_genres, seed_tracks } = req.query;
 
-    const response = await axios(config);
-
-    if (response.status === 200) {
-      const { tracks } = response.data;
-      res.json({
-        tracks: Object.assign(
-          ...tracks.map((track) => {
-            const { id, name, album, artists, external_urls } = track;
-            return {
-              [id]: {
-                openUrl: external_urls["spotify"],
-                name,
-                image: album.images[0] ? album.image[0].url : defaultImage,
-                artists: artists.map((artist) => artist.name),
-              },
-            };
-          })
-        ),
-      });
-    }
+    if (seed_artists || seed_genres || seed_tracks) {
+      const config = {
+        method: "get",
+        url: `https://api.spotify.com/v1/recommendations?seed_artists=${
+          seed_artists ? seed_artists : ""
+        }&seed_genres=${seed_genres ? seed_genres : ""}&seed_tracks=${
+          seed_tracks ? seed_tracks : ""
+        }`,
+        headers,
+      };
+      const response = await axios(config);
+      if (response.status === 200) {
+        const { tracks } = response.data;
+        res.json({
+          tracks: Object.assign(
+            ...tracks.map((track) => {
+              const { id, name, album, artists, external_urls } = track;
+              return {
+                [id]: {
+                  openUrl: external_urls["spotify"],
+                  name,
+                  image: album.images[0] ? album.images[0].url : defaultImage,
+                  artists: artists.map((a) => a.name),
+                },
+              };
+            })
+          ),
+        });
+      } else res.status(500).json({ message: "Ooopsy Poopsy" });
+    } else res.status(400).json({ message: "Please provide a seed value." });
   })
 );
 
@@ -393,8 +389,9 @@ router.get(
       headers,
     };
 
-    const getArtistDetails = async (type, id) => {};
 
+
+   
     const getTopTracks = async (id) => {
       config.url = `https://api.spotify.com/v1/artists/${id}/top-tracks?market=US`;
       const response = await axios(config);
@@ -419,9 +416,10 @@ router.get(
                 duration: duration_ms,
                 explicit,
                 artists: artists.map((artist) => {
+                  const { id, name } = artist;
                   return {
-                    id: artist.id,
-                    name: artist.name,
+                    id,
+                    name,
                   };
                 }),
               },
@@ -432,6 +430,7 @@ router.get(
       }
     };
 
+ 
     const getRelatedArtists = async (id) => {
       config.url = `https://api.spotify.com/v1/artists/${id}/related-artists`;
       const response = await axios(config);
@@ -439,13 +438,12 @@ router.get(
         let { artists } = response.data;
         artists = Object.assign(
           ...artists.map((artist) => {
-            const { name, external_urls } = artist;
-            console.log(artist);
+            const { id: artistId, name, external_urls, images } = artist;
             return {
-              [id]: {
+              [artistId]: {
                 name,
                 openUrl: external_urls["spotify"],
-                image: artist.images[0] ? artist.images[0].url : defaultImage,
+                image: images[0] ? images[0].url : defaultImage,
               },
             };
           })
@@ -454,24 +452,26 @@ router.get(
       }
     };
 
+ 
     const getArtistAlbums = async (id) => {
       config.url = `https://api.spotify.com/v1/artists/${id}/albums`;
       const response = await axios(config);
       if (response.status === 200) {
         let { items } = response.data;
         items = Object.assign(
-          ...items.map((item) => {
-            const { id: albumId, name, external_urls, artists } = item;
+          ...items.map((album) => {
+            const { id: albumId, name, external_urls, artists, images } = album;
             return {
               [albumId]: {
                 name,
                 openUrl: external_urls["spotify"],
-                image: item.images[0] ? item.images[0].url : defaultImage,
-                artists: artists.map((artist) => artist.name),
+                image: images[0] ? images[0].url : defaultImage,
+                artists: artists.map((a) => a.name),
               },
             };
           })
         );
+
         return items;
       }
     };
@@ -496,6 +496,7 @@ router.get(
             const topTracks = await getTopTracks(id);
             const relatedArtists = await getRelatedArtists(id);
             const albums = await getArtistAlbums(id);
+
             return {
               [id]: {
                 openUrl: external_urls["spotify"],
@@ -512,8 +513,8 @@ router.get(
           })
         );
         res.status(200).json({ artists });
-      } else res.status(500).json({ message: "ID ERROR" });
-    } else res.json({ message: "ID REQUIRED" }, 400);
+      } else res.status(500).json({ message: "Ooopsy Poopsy" });
+    } else res.json({ message: "Please provide an artist id." }, 400);
   })
 );
 

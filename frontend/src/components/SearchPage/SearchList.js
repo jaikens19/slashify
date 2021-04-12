@@ -64,7 +64,7 @@ const SearchList = ({ results, type }) => {
       {!(Object.entries(results) == 0) && (
         <div className='result-container'>
           <h1>
-            results for "{results.q}" returned: {results.total} results
+            All results for "{results.q}"
           </h1>
           {list}
         </div >

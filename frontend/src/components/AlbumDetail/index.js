@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-
+import { removeLike, addLike } from "../../store/likes";
 import TrackRow from "../TrackRow/";
 import { getAlbum } from "../../store/albums";
 import { checkText, getColors, defaultAvatar } from "../../utils";
@@ -9,34 +9,47 @@ import { checkText, getColors, defaultAvatar } from "../../utils";
 import "./AlbumDetail.css";
 
 const AlbumDetail = () => {
-  const dispatch = useDispatch();
   const { id } = useParams();
-  const [colorState, setColorState] = useState("#000000");
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
+  const { [id]: like } = useSelector((state) => state.likes);
   const { [id]: album } = useSelector((state) => state.albums);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [colorState, setColorState] = useState("#000000");
 
   async function setBackgroundColor(image) {
     setColorState((await getColors(image))[0]);
   }
-
+  
   useEffect(() => {
     if (album) setBackgroundColor(album.image);
   }, [album]);
-
+  
   useEffect(() => {
     if (!album) dispatch(getAlbum(id));
     else setIsLoaded(true);
   }, [id, dispatch, album]);
+  
+  useEffect(() => {
+    setIsLiked(like ? true : false)
+  }, [like])
+
+  
 
   function convertTime(ms) {
     const minutes = ms / 1000 / 60;
     const seconds = (minutes % 1).toFixed(4) * 60;
     return `${Math.floor(minutes)} min, ${Math.floor(seconds)} sec`;
   }
-
-  function changeLike() {
-    setIsLiked(!isLiked);
+  
+  async function toggleLike() {
+    if (isLiked) {
+      console.log(sessionUser.id, id)
+      setIsLiked(await dispatch(removeLike(sessionUser.id, id)));
+    } else {
+      setIsLiked(await dispatch(addLike(sessionUser.id, id, "album")));
+    }
   }
 
   return (
@@ -84,7 +97,7 @@ const AlbumDetail = () => {
                 </div>
                 <i
                   className={`${isLiked ? "fas" : "fal"} fa-heart heart-album`}
-                  onClick={changeLike}
+                  onClick={toggleLike}
                   style={{ color: isLiked ? "#1db954" : "" }}
                 ></i>
                 <i className="far fa-ellipsis-h dropdown-button"></i>

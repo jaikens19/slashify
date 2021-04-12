@@ -1,3 +1,7 @@
+.artist-page {
+    padding: 58px 16px 96px;
+}
+
 .artist-details {
     display: flex;
     align-items: flex-end;
@@ -6,7 +10,6 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-     color: white
 }
 .artist-text > :not(:first-child) {
     margin-top: 8px;
@@ -14,7 +17,6 @@
 .artist-text h1 {
     font-size: 7vw;
     letter-spacing: -5px;
-   
 }
 .verified-artist {
     display: flex;
@@ -27,7 +29,7 @@
     margin-left: 4px;
     font-size: 14px;
 }
-.artist-tracks {
+.artist-music {
     padding: 16px;
 }
 
@@ -38,7 +40,6 @@
     font-size: 12px;
     border: 1px solid #cfcfcf55;
     user-select: none;
-    color: white
 }
 .active {
     border: 1px solid #fff;
@@ -47,36 +48,35 @@
     border: 1px solid #fff;
 }
 
-.top-tracks {
+.artist-top-tracks,
+.artist-discography,
+.artist-related {
     display: flex;
     flex-direction: column;
-    margin-top: 16px;
 }
-
-.top-tracks > b {
+:is(.artist-top-tracks, .artist-discography, .artist-related) > :not(:first-child) {
+    margin-top: 8px;
+}
+.artist-detail-title {
+    margin-top: 16px;
     font-size: 22px;
 }
-.top-tracks > :not(:first-child) {
+.artist-tracks-toggle {
     margin-top: 8px;
-}
-.show-button {
-    color: rgb(145, 145, 145);
     font-size: 12px;
-    margin-top: 8px;
+    color: var(--color-text-sub);
 }
-
-.show-button:hover {
-   color: white;
-   cursor: default;
-   user-select: none;
+.artist-tracks-toggle:hover {
+    cursor: default;
+    user-select: none;
+    color: #fff;
 }
-
-
-
-.artists-discography-list {
+.artist-related-list,
+.artist-discography-list {
     display: grid;
-	gap: 16px;
-	width: 100%;
-	justify-items: center;
-	align-items: center;
+    justify-items: center;
+    align-items: center;
+    gap: 16px;
+
+    width: 100%;
 }

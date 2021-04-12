@@ -18,6 +18,7 @@ router.get(
       });
 
       res.json(
+        likes.length > 0 ?
         Object.assign(
           ...likes.map((like) => {
             return {
@@ -27,6 +28,7 @@ router.get(
             };
           })
         )
+        : {}
       );
     }
   })
@@ -37,37 +39,37 @@ router.post(
   asyncHandler(async (req, res) => {
     const { userId, type, spotId } = req.body;
 
-    if ((userId, type, spotId)) {
+    if ((userId && type && spotId)) {
       try {
         const like = await Like.create({ userId, type, spotId });
-        res.json(like);
+        res.status(200).json({[spotId]: { type }});
       } catch (error) {
-        res.json(error);
+        res.status(500).json(error);
       }
-    }
+    } else res.status(400).json({message: 'MISSING "USERID", "TYPE" and/or "SPOTID"'})
   })
 );
 
 router.delete(
-  "/likes/:id",
+  "/likes/:spotId",
   asyncHandler(async (req, res) => {
-    const { id } = req.params;
-    const { userId };
+    const { spotId } = req.params;
+    const { userId } = req.body
 
-    if (id || userId) {
+    if (spotId && userId) {
       try {
         const likes = await Like.destroy({
           where: {
             userId,
-            spotId: id,
+            spotId
           },
         });
 
-        res.json(likes);
+        res.status(likes > 0 ? 200 : 204).json({status:`SUCCESSFULLY deleted ${likes} entries`, spotId});
       } catch (error) {
-          res.json(error)
+          res.status(500).json({error})
       }
-    }
+    } else res.status(400).json({message: 'MISSING "id" and or userid'})
   })
 );
 

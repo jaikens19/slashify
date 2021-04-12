@@ -35,6 +35,9 @@ const Navigation = ({ isLoaded }) => {
         <div className="navbar-history-btn" onClick={() => history.goForward()}>
           <i className="fal fa-chevron-right"></i>
         </div>
+        <div className="navbar-history-btn" onClick={() => history.push('/search')}>
+          <i className="fal fa-search"></i>
+        </div>
       </div>
       {isLoaded && sessionLinks}
     </div>

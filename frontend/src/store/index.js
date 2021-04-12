@@ -6,6 +6,8 @@ import search from "./search";
 import songbar from "./songbar"
 import artists from "./artists"
 import playlists from "./playlists"
+import likes from "./likes"
+import dashboard from "./dashboard"
 
 const rootReducer = combineReducers({
   session,
@@ -13,7 +15,9 @@ const rootReducer = combineReducers({
   search,
   songbar,
   artists,
-  playlists
+  playlists,
+  likes,
+  dashboard
 });
 
 let enhancer;

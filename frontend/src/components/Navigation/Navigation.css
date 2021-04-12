@@ -5,8 +5,8 @@
 .navbar-container {
   display: flex;
   justify-content: space-between;
-  background-color: purple;
-  height: 42px;
+  background-color: #121212;
+  height: 62px;
   position: fixed;
   width: 100%;
   z-index: 1;

@@ -1,0 +1,28 @@
+.dashboard-container {
+    padding: 58px 16px 96px;
+}
+
+.dashboard-header {
+    display: flex;
+    align-items: flex-end;
+    height: 100px;
+}
+.dashboard-header h1 {
+   font-size: 60px;
+}
+
+.dashboard-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+}
+.dashboard-section > b {
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+
+.dashboard-grid {
+    display: grid;
+    justify-items: center;
+    gap: 16px;
+}

@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import TrackRow from "../TrackRow";
 import { checkText, getColors, defaultAvatar } from "../../utils";
-
+import { removeLike, addLike } from "../../store/likes";
 // bad playlist ID: 2KrnunwPRQhX2x4KYLb4Ed
 
 const Playlist = () => {
@@ -15,6 +15,8 @@ const Playlist = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const { [id]: playlist } = useSelector((state) => state.playlists);
   const [isLiked, setIsLiked] = useState(false);
+  const { [id]: like } = useSelector((state) => state.likes);
+  const sessionUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
     if (!playlist) {
@@ -33,8 +35,16 @@ const Playlist = () => {
     if (playlist) setBackgroundColor(playlist.image);
   }, [playlist]);
 
-  function changeLike() {
-    setIsLiked(!isLiked);
+  useEffect(() => {
+    setIsLiked(like ? true : false);
+  }, [like]);
+
+  async function toggleLike() {
+    if (isLiked) {
+      setIsLiked(await dispatch(removeLike(sessionUser.id, id)));
+    } else {
+      setIsLiked(await dispatch(addLike(sessionUser.id, id, "playlist")));
+    }
   }
 
   return (
@@ -74,7 +84,7 @@ const Playlist = () => {
                 </div>
                 <i
                   className={`${isLiked ? "fas" : "fal"} fa-heart heart-album`}
-                  onClick={changeLike}
+                  onClick={toggleLike}
                   style={{ color: isLiked ? "#1db954" : "" }}
                 ></i>
                 <i className="far fa-ellipsis-h dropdown-button"></i>

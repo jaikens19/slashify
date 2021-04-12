@@ -1,5 +1,3 @@
-
-
 const UPDATE_SONGLINK = 'songbar/updateSongLink'
 
 const updateLink = link => ({
@@ -12,7 +10,7 @@ export const updateSongLink = link => async dispatch => {
 }
 
 const initialState = {
-  link: "https://open.spotify.com/embed/album/2cnGockaLMIgfToxVQJMoj",
+  link: "https://open.spotify.com/embed/album/1Op6caTUaT8v4XXec3CfpW",
 };
 
 export default function reducer(state = initialState, action) {
